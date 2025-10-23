@@ -27,8 +27,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/client/dist ./client/dist
 
-RUN npm prune --omit=dev
-
 EXPOSE 8080
 
 CMD ["node", "dist/server/src/index.js"]
