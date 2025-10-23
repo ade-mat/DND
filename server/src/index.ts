@@ -5,9 +5,9 @@ import morgan from 'morgan';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { campaignData } from '../../shared/campaign';
-import type { Campaign, Metric } from '../../shared/types';
-import { createOracleResponse } from './lib/npcOracle';
+import { campaignData } from '../../shared/campaign.js';
+import type { Campaign, Metric } from '../../shared/types.js';
+import { createOracleResponse } from './lib/npcOracle.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

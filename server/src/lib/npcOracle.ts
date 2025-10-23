@@ -1,4 +1,4 @@
-import type { Metric } from '../../../shared/types';
+import type { Metric } from '../../../shared/types.js';
 
 interface HeroSnapshot {
   name: string;
