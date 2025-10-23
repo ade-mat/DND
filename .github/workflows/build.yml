@@ -90,8 +90,8 @@ jobs:
             --ingress=internal \
             --session-affinity \
             --scaling=auto \
-            --network=default \
-            --subnet=default \
+            --vpc-connector=cloud-run-conn \
+            --vpc-egress=private-ranges-only \
             --quiet
 
           gcloud run services add-iam-policy-binding "${CLOUD_RUN_SERVICE}" \
