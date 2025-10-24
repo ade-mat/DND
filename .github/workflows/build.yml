@@ -94,8 +94,10 @@ jobs:
       - name: Deploy to Cloud Run
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          FIREBASE_PROJECT_ID_SECRET: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          FIREBASE_PROJECT_ID_SECRET: ${{ secrets.FIREBASE_PROJECT_ID }}
         run: |
+          FIREBASE_SERVICE_ACCOUNT_B64="$(printf '%s' "${FIREBASE_SERVICE_ACCOUNT}" | base64 -w0)"
+
           gcloud beta run deploy "${CLOUD_RUN_SERVICE}" \
             --image="${IMAGE_URI}" \
             --region="${CLOUD_RUN_REGION}" \
@@ -105,8 +107,7 @@ jobs:
             --scaling=auto \
             --network=default \
             --subnet=default \
-            --set-env-vars "FIREBASE_SERVICE_ACCOUNT=${FIREBASE_SERVICE_ACCOUNT}" \
-            --set-env-vars "FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID_SECRET}" \
+            --set-env-vars "FIREBASE_SERVICE_ACCOUNT=${FIREBASE_SERVICE_ACCOUNT_B64},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID_SECRET}" \
             --quiet
 
           gcloud run services add-iam-policy-binding "${CLOUD_RUN_SERVICE}" \

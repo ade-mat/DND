@@ -49,7 +49,7 @@ The web app now supports Firebase Authentication with Firestore-backed saves so 
    ```
 3. Generate a service account key (JSON) with **Firebase Admin SDK** access.  
    - In the [Firebase console](https://console.firebase.google.com/), open **Project settings → Service accounts → Firebase Admin SDK → Generate new private key**. Download the JSON file; keep it private.  
-   - Option A: set the environment variable `FIREBASE_SERVICE_ACCOUNT` to the JSON contents. For shells that dislike quotes, base64-encode the file (`base64 service-account.json`) and use that string instead. If the JSON lacks a `project_id`, also set `FIREBASE_PROJECT_ID`.  
+   - Option A: set the environment variable `FIREBASE_SERVICE_ACCOUNT` to the JSON contents. For shells that dislike quotes, base64-encode the file (`base64 service-account.json`) and use that string instead. If the JSON lacks a `project_id`, also set `FIREBASE_PROJECT_ID`. (In CI the GitHub Actions workflow accepts the raw JSON and base64-encodes it before deploying to Cloud Run.)  
    - Option B: store the JSON on disk and set `GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/service-account.json`. The server reads the file when it starts.
    - For local development, create `server/firebase-service-account.local.json` (ignored by git) and paste your real key there. The server loads the `.local` file automatically if the environment variable is unset.
 4. Optionally override the Firestore collection name with `FIREBASE_PROGRESS_COLLECTION` (defaults to `gameProgress`).
