@@ -1,4 +1,4 @@
-# Emberfall Ascent – Solo D&D Web Adventure
+# Emberfall Ascent – Solo D&D Adventure
 
 Emberfall Ascent is a single-player narrative RPG inspired by tabletop D&D. Build a lone hero with authentic 5e-style character creation, roll ability checks against dynamic DCs, and guide them through a three-act campaign to reclaim the Heart of Embers before the floating spire collapses on the city below.
 
