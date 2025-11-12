@@ -117,19 +117,25 @@ npm start
 ### Docker
 
 ```bash
-# Build the multi-stage image (needs the VITE_* build args for client auth config)
-docker build -t emberfall-ascent \
-  --build-arg VITE_FIREBASE_API_KEY=... \
-  --build-arg VITE_FIREBASE_AUTH_DOMAIN=... \
-  --build-arg VITE_FIREBASE_PROJECT_ID=... \
-  --build-arg VITE_FIREBASE_STORAGE_BUCKET=... \
-  --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID=... \
-  --build-arg VITE_FIREBASE_APP_ID=... \
+# Build the multi-stage image (needs the VITE_* client secrets)
+cat <<'EOF' > firebase.build.env
+VITE_FIREBASE_API_KEY=...
+VITE_FIREBASE_AUTH_DOMAIN=...
+VITE_FIREBASE_PROJECT_ID=...
+VITE_FIREBASE_STORAGE_BUCKET=...
+VITE_FIREBASE_MESSAGING_SENDER_ID=...
+VITE_FIREBASE_APP_ID=...
+EOF
+
+DOCKER_BUILDKIT=1 docker build -t emberfall-ascent \
+  --secret id=vite_client_env,src=firebase.build.env \
   .
 
 # Run locally on port 8080 (matches Cloud Run/App Engine defaults)
 docker run -p 8080:8080 emberfall-ascent
 ```
+
+The Dockerfile never bakes Firebase secrets into layers. Instead, it expects a BuildKit secret (`vite_client_env`) that mirrors the contents of `client/.env`. When building locally, supply a file with all `VITE_*` values as shown above. The `build.yml` workflow generates the same payload from GitHub secrets and passes it via `--secret id=vite_client_env,env=CLIENT_ENV`.
 
 ### Cloud Run pipeline
 

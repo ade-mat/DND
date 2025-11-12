@@ -3,20 +3,6 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-ARG VITE_FIREBASE_API_KEY
-ARG VITE_FIREBASE_AUTH_DOMAIN
-ARG VITE_FIREBASE_PROJECT_ID
-ARG VITE_FIREBASE_STORAGE_BUCKET
-ARG VITE_FIREBASE_MESSAGING_SENDER_ID
-ARG VITE_FIREBASE_APP_ID
-
-ENV VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY}
-ENV VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN}
-ENV VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID}
-ENV VITE_FIREBASE_STORAGE_BUCKET=${VITE_FIREBASE_STORAGE_BUCKET}
-ENV VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID}
-ENV VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID}
-
 COPY package.json ./
 COPY client/package.json client/
 COPY server/package.json server/
@@ -25,7 +11,13 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build --prefix client \
+RUN --mount=type=secret,id=vite_client_env \
+    if [ -f /run/secrets/vite_client_env ]; then \
+      set -a; \
+      . /run/secrets/vite_client_env; \
+      set +a; \
+    fi && \
+    npm run build --prefix client \
   && npm run build --prefix server \
   && mkdir -p dist/client \
   && cp -r client/dist/. dist/client/
