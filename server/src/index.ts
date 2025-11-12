@@ -1,6 +1,7 @@
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -78,9 +79,17 @@ const clientDistPath = clientDistCandidates.find((candidate) =>
   fs.existsSync(candidate)
 );
 
+// Set up rate limiter: max 100 requests per 15 minutes per IP
+const staticFileLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 if (clientDistPath) {
   app.use(express.static(clientDistPath));
-  app.get('*', (_req, res) => {
+  app.get('*', staticFileLimiter, (_req, res) => {
     res.sendFile(path.join(clientDistPath, 'index.html'));
   });
 }
