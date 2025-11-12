@@ -876,8 +876,9 @@ button {
 }
 
 .world-map__canvas--fullscreen {
-  aspect-ratio: auto;
-  height: 100%;
+  aspect-ratio: 5 / 6;
+  height: auto;
+  max-height: 72vh;
   cursor: default;
 }
 
@@ -1036,14 +1037,23 @@ button {
 
 .world-map-modal__body {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 1fr);
   gap: 1.25rem;
   height: 100%;
+  align-items: start;
+}
+
+.world-map-modal__map {
+  max-height: 72vh;
+  width: 100%;
+  align-self: start;
+  justify-self: center;
+  overflow: hidden;
 }
 
 .world-map-modal__body .world-map__canvas--fullscreen {
   border-radius: 1rem;
-  height: 100%;
+  width: 100%;
 }
 
 .world-map-modal__sidebar {

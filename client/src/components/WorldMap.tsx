@@ -531,7 +531,7 @@ const WorldMap = ({ variant = 'full' }: WorldMapProps) => {
               </button>
             </header>
             <div className="world-map-modal__body">
-              {mapCanvas('full')}
+              <div className="world-map-modal__map">{mapCanvas('full')}</div>
               <div className="world-map-modal__sidebar">
                 {detailLocation && (
                   <div className="world-map__details">
