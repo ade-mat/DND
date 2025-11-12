@@ -19,8 +19,8 @@ env:
   IMAGE: dnd-web
   CLOUD_RUN_SERVICE: dnd
   CLOUD_RUN_REGION: europe-west2
-  WORKLOAD_IDENTITY_PROVIDER: projects/193435249823/locations/global/workloadIdentityPools/github-pool/providers/github-provider
-  SERVICE_ACCOUNT_EMAIL: github-actions-deployer@newsite-4cb22.iam.gserviceaccount.com
+  WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+  SERVICE_ACCOUNT_EMAIL: ${{ vars.SERVICE_ACCOUNT_EMAIL }}
 
 jobs:
   build-publish-deploy:
