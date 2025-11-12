@@ -150,8 +150,30 @@ export interface SceneNode {
   options: SceneChoice[];
   once?: boolean;
   tags?: string[];
+  locationId?: string;
   onEnter?: SceneEffect;
   fallbackSceneId?: string | null;
+}
+
+export interface WorldMapLocation {
+  id: string;
+  name: string;
+  summary: string;
+  position: {
+    x: number;
+    y: number;
+  };
+  sceneIds: string[];
+  connections?: string[];
+  tier?: 'city' | 'approach' | 'spire' | 'heart';
+}
+
+export interface WorldMapDefinition {
+  width: number;
+  height: number;
+  background?: string;
+  description?: string;
+  locations: WorldMapLocation[];
 }
 
 export interface Campaign {
@@ -161,6 +183,7 @@ export interface Campaign {
   introSceneId: string;
   scenes: SceneNode[];
   guidance?: string[];
+  map?: WorldMapDefinition;
 }
 
 export interface LogEntry {

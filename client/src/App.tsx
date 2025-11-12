@@ -5,6 +5,7 @@ import SceneView from '@/components/SceneView';
 import Sidebar from '@/components/Sidebar';
 import LogPanel from '@/components/LogPanel';
 import Epilogue from '@/components/Epilogue';
+import WorldMap from '@/components/WorldMap';
 import ConversationPanel from '@/components/ConversationPanel';
 import DiceTray from '@/components/DiceTray';
 import AuthPanel from '@/components/AuthPanel';
@@ -43,6 +44,7 @@ const GameShell = ({
     body = (
       <>
         <CharacterCreator />
+        <WorldMap />
         {isFetching && <div className="loading-indicator">Syncing campaign data…</div>}
       </>
     );
@@ -76,6 +78,7 @@ const GameShell = ({
           </section>
           <section className="secondary-panel">
             <DiceTray />
+            <WorldMap variant="sidebar" />
             <Sidebar />
             <ConversationPanel />
             <LogPanel />
