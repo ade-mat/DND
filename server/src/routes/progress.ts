@@ -15,6 +15,7 @@ interface ProgressDocument {
 }
 
 const router = Router();
+const collectionName = process.env.FIREBASE_PROGRESS_COLLECTION ?? 'gameProgress';
 
 // Set up rate limiter: maximum 100 requests per 15 minutes
 const limiter = rateLimit({
@@ -35,9 +36,7 @@ const isValidState = (candidate: unknown): candidate is GameStateSnapshot => {
   );
 };
 
-router.use(requireFirebaseAuth);
-router.use(limiter);
-router.get('/', async (req, res) => {
+router.get('/', requireFirebaseAuth, limiter, async (req, res) => {
   if (!isFirebaseAdminReady()) {
     return res.status(503).json({ error: 'Persistence backend unavailable.' });
   }
@@ -65,7 +64,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', requireFirebaseAuth, limiter, async (req, res) => {
   if (!isFirebaseAdminReady()) {
     return res.status(503).json({ error: 'Persistence backend unavailable.' });
   }
@@ -95,7 +94,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', requireFirebaseAuth, limiter, async (req, res) => {
   if (!isFirebaseAdminReady()) {
     return res.status(503).json({ error: 'Persistence backend unavailable.' });
   }
