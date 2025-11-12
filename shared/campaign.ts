@@ -11,12 +11,159 @@ export const campaignData: Campaign = {
     'Checks roll a d20 plus ability modifiers and proficiency when appropriate; advantage and disadvantage still apply.',
     'Status tracks like stress, wounds, influence, and corruption evolve through play and colour the finale.'
   ],
+  map: {
+    width: 100,
+    height: 120,
+    description:
+      'Emberfall is a tiered cliff city beneath a fractured spire. The journey climbs from the Ashfen Plaza through ritual lifts and maintenance shafts to the Heart itself.',
+    locations: [
+      {
+        id: 'emberfall_terraces',
+        name: 'Emberfall Terraces',
+        summary: 'Survivors gather across the lower terraces, waiting to see if the city endures.',
+        position: { x: 12, y: 110 },
+        tier: 'city',
+        sceneIds: ['epilogue_resolution'],
+        connections: ['emberfall_market', 'spire_cascade']
+      },
+      {
+        id: 'emberfall_market',
+        name: 'Ashfen Plaza',
+        summary: 'The main market below the hovering spire. Fires, refugees, and rumors collide here.',
+        position: { x: 34, y: 96 },
+        tier: 'city',
+        sceneIds: ['intro_arrival', 'marek_clash', 'market_crossroads'],
+        connections: [
+          'lantern_sanctum',
+          'tamsin_workshop',
+          'sentinel_command',
+          'spire_base',
+          'emberfall_terraces'
+        ]
+      },
+      {
+        id: 'lantern_sanctum',
+        name: 'Lantern Sanctum',
+        summary: 'Seraphine’s incense-draped divination hall tucked off the plaza.',
+        position: { x: 10, y: 86 },
+        tier: 'city',
+        sceneIds: ['seraphine_sanctum'],
+        connections: ['emberfall_market']
+      },
+      {
+        id: 'tamsin_workshop',
+        name: 'Smoke-Bend Workshop',
+        summary: 'Tamsin’s tinkering nook lit by sputtering coils and half-built gadgets.',
+        position: { x: 22, y: 84 },
+        tier: 'city',
+        sceneIds: ['tamsin_workshop'],
+        connections: ['emberfall_market']
+      },
+      {
+        id: 'sentinel_command',
+        name: 'Sentinel Bastion',
+        summary: 'Captain Thorne’s command rostrum overlooking the evacuation routes.',
+        position: { x: 52, y: 88 },
+        tier: 'city',
+        sceneIds: ['throne_command'],
+        connections: ['emberfall_market']
+      },
+      {
+        id: 'spire_base',
+        name: 'Shardspire Base',
+        summary: 'Crumbling lifts and barricaded ramps that access the spire’s underbelly.',
+        position: { x: 60, y: 74 },
+        tier: 'approach',
+        sceneIds: ['spire_approach'],
+        connections: ['emberfall_market', 'etheric_lift', 'maintenance_shaft']
+      },
+      {
+        id: 'etheric_lift',
+        name: 'Etheric Lift',
+        summary: 'A ritual elevator that threads the astral storm coiling around the spire.',
+        position: { x: 68, y: 58 },
+        tier: 'spire',
+        sceneIds: ['etheric_lift'],
+        connections: ['spire_base', 'nerrix_hold', 'mid_spire_plaza']
+      },
+      {
+        id: 'maintenance_shaft',
+        name: 'Maintenance Chasm',
+        summary: 'Ozone-laced service tunnels packed with arcing conduits.',
+        position: { x: 48, y: 58 },
+        tier: 'approach',
+        sceneIds: ['maintenance_shaft'],
+        connections: ['spire_base', 'sentry_gauntlet', 'mid_spire_plaza']
+      },
+      {
+        id: 'sentry_gauntlet',
+        name: 'Arc-Sentry Gauntlet',
+        summary: 'Dormant sentries prowl this choke point, ready to shred intruders.',
+        position: { x: 44, y: 46 },
+        tier: 'spire',
+        sceneIds: ['sentry_skirmish'],
+        connections: ['maintenance_shaft', 'mid_spire_plaza']
+      },
+      {
+        id: 'nerrix_hold',
+        name: 'Containment Annex',
+        summary: 'A dim auxiliary cell where Nerrix hangs trapped in stasis.',
+        position: { x: 74, y: 46 },
+        tier: 'spire',
+        sceneIds: ['nerrix_cell'],
+        connections: ['etheric_lift', 'mid_spire_plaza']
+      },
+      {
+        id: 'mid_spire_plaza',
+        name: 'Mid-Spire Plaza',
+        summary: 'Broken terraces orbiting the Heart’s chamber amidst violent arcs.',
+        position: { x: 60, y: 36 },
+        tier: 'spire',
+        sceneIds: ['spire_midway'],
+        connections: [
+          'etheric_lift',
+          'maintenance_shaft',
+          'sentry_gauntlet',
+          'nerrix_hold',
+          'heart_antechamber'
+        ]
+      },
+      {
+        id: 'heart_antechamber',
+        name: 'Heart Antechamber',
+        summary: 'A whispering hall of statues and wards that buffer the Heart’s radiance.',
+        position: { x: 68, y: 24 },
+        tier: 'heart',
+        sceneIds: ['heart_antechamber'],
+        connections: ['mid_spire_plaza', 'heart_chamber']
+      },
+      {
+        id: 'heart_chamber',
+        name: 'Heart of Embers',
+        summary: 'Lirael guards the unstable Heart amid shards of suspended stone.',
+        position: { x: 70, y: 12 },
+        tier: 'heart',
+        sceneIds: ['heart_chamber'],
+        connections: ['heart_antechamber', 'spire_cascade']
+      },
+      {
+        id: 'spire_cascade',
+        name: 'Cascade Run',
+        summary: 'A perilous descent of collapsing bridges once the Heart destabilizes.',
+        position: { x: 58, y: 6 },
+        tier: 'heart',
+        sceneIds: ['escape_gauntlet'],
+        connections: ['heart_chamber', 'emberfall_terraces']
+      }
+    ]
+  },
   scenes: [
     {
       id: 'intro_arrival',
       title: 'Smoke Over Emberfall',
       narrative:
         'You arrive beneath the hovering shards of the shattered spire. Sparks rain on the market square while citizens flee toward the lower terraces. The Heart of Embers pulses overhead, unstable and keening. You have one chance to claim it before the spire collapses.',
+      locationId: 'emberfall_market',
       options: [
         {
           id: 'intro_seek_seraphine',
@@ -91,6 +238,7 @@ export const campaignData: Campaign = {
       title: 'The Lantern Sanctum',
       narrative:
         'Seraphine traces a sigil in the air, revealing flickers of possible futures. “The Heart sings to you,” she murmurs. “But it also listens. Choose your steps wisely.”',
+      locationId: 'lantern_sanctum',
       options: [
         {
           id: 'seraphine_vision',
@@ -169,6 +317,7 @@ export const campaignData: Campaign = {
       title: 'Workshop of Whirring Wonders',
       narrative:
         'Tamsin kicks a crate aside, revealing half-finished gadgets. “The spire’s systems are ancient,” she says. “Let’s give you an edge.”',
+      locationId: 'tamsin_workshop',
       options: [
         {
           id: 'tamsin_gadget',
@@ -249,6 +398,7 @@ export const campaignData: Campaign = {
       title: 'Sentinel Briefing',
       narrative:
         'Captain Thorne issues terse orders while the guard rally civilians. “Use the badge wisely,” he says. “Sentinel lifts are keyed to it. Fail, and Emberfall fails with you.”',
+      locationId: 'sentinel_command',
       options: [
         {
           id: 'throne_assign',
@@ -308,6 +458,7 @@ export const campaignData: Campaign = {
       title: 'Shadowed by Sentinels',
       narrative:
         'Two sentinels tail you through the crowd. Orders echo: “Do not let them near the spire until verified.” Time bleeds away.',
+      locationId: 'emberfall_market',
       options: [
         {
           id: 'marek_slip',
@@ -399,6 +550,7 @@ export const campaignData: Campaign = {
       title: 'Crossroads in Crisis',
       narrative:
         'Smoke swirls above the plaza as citizens dart between barricades. The spire looms overhead, its lower platforms shuddering in unstable arcs.',
+      locationId: 'emberfall_market',
       options: [
         {
           id: 'crossroads_aid_civilians',
@@ -472,6 +624,7 @@ export const campaignData: Campaign = {
       title: 'Shattered Spire Approach',
       narrative:
         'The base of the floating spire groans as chunks of stone drift loose. Two routes remain: the ritual lift, flickering with unstable light, and a narrow maintenance shaft venting ozone.',
+      locationId: 'spire_base',
       options: [
         {
           id: 'approach_ritual_lift',
@@ -551,6 +704,7 @@ export const campaignData: Campaign = {
       title: 'Etheric Lift Ascent',
       narrative:
         'The lift carries you through a storm of vibrant shards. Astral currents lash against the warding sigils. Midway, the platform jolts to a halt beside an auxiliary junction.',
+      locationId: 'etheric_lift',
       options: [
         {
           id: 'lift_override',
@@ -608,6 +762,7 @@ export const campaignData: Campaign = {
       title: 'Electrified Maintenance Shaft',
       narrative:
         'The shaft slants upward with live conduits arcing across narrow platforms. Distant clangs hint at automaton sentries patrolling nearby.',
+      locationId: 'maintenance_shaft',
       options: [
         {
           id: 'shaft_silent',
@@ -682,6 +837,7 @@ export const campaignData: Campaign = {
       title: 'Arc-Sentry Skirmish',
       narrative:
         'Arc-sentries whirl toward you, blades humming with energy. Sparks fly as they advance in synchronized formation.',
+      locationId: 'sentry_gauntlet',
       options: [
         {
           id: 'sentry_overload',
@@ -762,6 +918,7 @@ export const campaignData: Campaign = {
       title: 'Nerrix’s Containment Cell',
       narrative:
         'Nerrix, a soot-streaked tinkerer, hangs suspended in amber light. “Get me out and I’ll stabilize the Heart,” they plead.',
+      locationId: 'nerrix_hold',
       options: [
         {
           id: 'nerrix_free',
@@ -837,6 +994,7 @@ export const campaignData: Campaign = {
       title: 'Mid-Spire Plaza',
       narrative:
         'You emerge on a broken plaza hovering near the Heart’s chamber. Energy arcs to shattered archways as the floating spire groans.',
+      locationId: 'mid_spire_plaza',
       options: [
         {
           id: 'midway_assess',
@@ -902,6 +1060,7 @@ export const campaignData: Campaign = {
       title: 'Whispers of the Heart',
       narrative:
         'The antechamber resonates with layered voices. Shadows coil around a broken statue of Lirael, the Heart’s astral warden. The final door awaits.',
+      locationId: 'heart_antechamber',
       options: [
         {
           id: 'antechamber_invocation',
@@ -958,6 +1117,7 @@ export const campaignData: Campaign = {
       title: 'The Heart of Embers',
       narrative:
         'Within the fractured chamber, the Heart pulses erratically. Lirael, once radiant, now stands corrupted by astral fire. “Leave,” she intones, voice layered with thunder. “The Heart will consume all.”',
+      locationId: 'heart_chamber',
       options: [
         {
           id: 'heart_cleanse',
@@ -1054,6 +1214,7 @@ export const campaignData: Campaign = {
       title: 'Cascade Escape',
       narrative:
         'With the Heart decided, the spire destabilizes. Platforms collapse as torrents of energy chase you toward the exit.',
+      locationId: 'spire_cascade',
       options: [
         {
           id: 'escape_dash',
@@ -1112,6 +1273,7 @@ export const campaignData: Campaign = {
       title: 'Epilogue: Emberfall’s Fate',
       narrative:
         'You stand amid the surviving terraces as dawn breaks. Emberfall watches, hopeful or fearful, to learn what you achieved within the spire.',
+      locationId: 'emberfall_terraces',
       options: [
         {
           id: 'epilogue_reflect',
