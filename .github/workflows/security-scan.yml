@@ -28,6 +28,8 @@ jobs:
       - name: Run Microsoft Security DevOps analyzers
         id: msdo
         uses: microsoft/security-devops-action@v1
+        with:
+          tools: credscan,checkov
 
       - name: Upload SARIF to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
